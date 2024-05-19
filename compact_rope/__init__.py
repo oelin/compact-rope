@@ -9,11 +9,9 @@ class RoPE(nn.Module):
     def __init__(self, embedding_dimension: int) -> None:
         super().__init__()
 
-        maximum = 10.
-
         self.theta = torch.linspace(
             start=math.log(0.5 * math.pi),
-            end=math.log(maximum * math.pi),
+            end=math.log(1000. * math.pi),
             steps=embedding_dimension // 2,
         ).exp().repeat_interleave(2, dim=-1)
 
