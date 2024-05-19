@@ -37,9 +37,10 @@ class RoPE(nn.Module):
 ## Usage
 
 ```python
-rotate = RoPE(embedding_dimension=256)
-
-x = torch.randn((1, 10, 256))
-position = torch.rand((1, 10))
-x = rotate(x, position)
+>>> from compact_rope import RoPE
+>>>
+>>> module = RoPE(embedding_dimension=256)
+>>> x = torch.randn((1, 10, 256))
+>>> position = torch.rand((1, 10))
+>>> x = module(x, position)
 ```
