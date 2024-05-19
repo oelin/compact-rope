@@ -1,17 +1,15 @@
 # Compact RoPE
 
-A more compact implementation of RoPE. 
+A more compact implementation of RoPE. Unlike most open-source implementations, this one is entirely self-contained.
 
 ```python
 class RoPE(nn.Module):
     def __init__(self, embedding_dimension: int) -> None:
         super().__init__()
 
-        maximum = 10.
-
         self.theta = torch.linspace(
             start=math.log(0.5 * math.pi),
-            end=math.log(maximum * math.pi),
+            end=math.log(1000. * math.pi),
             steps=embedding_dimension // 2,
         ).exp().repeat_interleave(2, dim=-1)
 
@@ -34,4 +32,14 @@ class RoPE(nn.Module):
         x = x*cos + x_right*sin
 
         return x
+```
+
+## Usage
+
+```python
+rotate = RoPE(embedding_dimension=256)
+
+x = torch.randn((1, 10, 256))
+position = torch.rand((1, 10))
+x = rotate(x, position)
 ```
